@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    </q><h1 id="title">Profile</h1>
+    <button><a href="/">Home</a></button>
+</body>
+<script>
+
+    let host = "http://localhost:8080"
+
+    let infoUrl = "/info"
+
+
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        console.log("In XMLHttpRequest for authorization")
+        console.log("State: " + this.readyState + ", status: " + this.status)
+        if (this.readyState === 4 && this.status === 200) {
+            let txt = xhttp.responseText;
+            let bodyObj = JSON.parse(txt)
+            let session = bodyObj.sessionId
+            const titleElement = document.getElementById('title');
+            titleElement.innerText += ` (session: ${session})`;
+            titleElement.style.color = session ? 'green' : 'red';
+        }
+    }
+    xhttp.open("GET", host + infoUrl, true);
+    xhttp.send();
+
+
+</script>
+</html>

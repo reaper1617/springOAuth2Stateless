@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+    <h1>Google sign in</h1>
+    <br>
+    <button style="width: 100px" onclick="loginFunc()">Sign in</button>
+    <br>
+    <h2>Profile</h2>
+    <button><a href="/profile.html">Profile</a></button>
+</body>
+
+<script>
+
+    let host = "http://localhost:8080"
+
+    let authUrl = "/oauth2/authorization/google"
+
+    let loginFunc = function (){
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function (){
+            console.log("In XMLHttpRequest for authorization")
+            console.log("State: " + this.readyState + ", status: " + this.status)
+            if (this.readyState === 4 && this.status === 200){
+                let txt = xhttp.responseText;
+                let bodyObj = JSON.parse(txt)
+                location.replace(bodyObj.redirectUrl)
+            }
+        }
+        xhttp.open("GET", host + authUrl, true);
+        xhttp.send();
+    }
+</script>
+</html>

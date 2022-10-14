@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Callback</title>
+</head>
+<body>
+
+</body>
+<script>
+
+    (async () => {
+        let host = 'http://localhost:8080'
+        let loginUrl = '/oauth2/login/code/google'
+
+        let xhttp = new XMLHttpRequest()
+        xhttp.onreadystatechange = function () {
+            console.log("In XMLHttpRequest for login")
+            console.log("State: " + this.readyState + ", status: " + this.status)
+            if (this.readyState === 4 && this.status === 200) {
+                let txt = xhttp.responseText;
+                let bodyObj = JSON.parse(txt)
+                console.log('Parsed obj: ' + bodyObj)
+            }
+        }
+        xhttp.open("GET", host + loginUrl + location.search)
+        xhttp.send()
+    })();
+
+</script>
+</html>
